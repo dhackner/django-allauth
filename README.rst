@@ -192,9 +192,10 @@ ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL (=settings.LOGIN_URL)
   The URL to redirect to after a successful e-mail confirmation, in case no
   user is logged in.
 
-ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL (=settings.LOGIN_REDIRECT_URL)
-  The URL to redirect to after a successful e-mail confirmation, in case of
-  an authenticated user.
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL (=None)
+  The URL to redirect to after a successful e-mail confirmation, in
+  case of an authenticated user. Set to `None` to use
+  `settings.LOGIN_REDIRECT_URL`.
 
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS (=3)
   Determines the expiration date of email confirmation mails (# of days).
@@ -596,6 +597,16 @@ Use the `provider_login_url` tag to generate provider specific login URLs::
     <a href="{% provider_login_url "openid" openid="https://www.google.com/accounts/o8/id" next="/success/url/" %}">Google</a>
     <a href="{% provider_login_url "twitter" %}">Twitter</a>
 
+
+For easy access to the social accounts for a user::
+
+    {% get_social_accounts user as accounts %}
+
+Then::
+
+    {{accounts.twitter}} -- a list of connected Twitter accounts
+    {{accounts.twitter.0}} -- the first Twitter account
+    {% if accounts %} -- if there is at least one social account
 
 Decorators
 ==========
